@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>python</title>
-  <meta charset="UTF-8">
-</head>
-<body>
-  <h1>ゼロからウェブデザインを勉強しよう！</h1>
-  <p>まずはHTMLについて学びましょう</p>
-</body>
-</html>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+<link rel="icon" href="{% static 'img/favicon.ico' %}">
+
+<h1>投稿一覧</h1>
+<ul>
+  {% for post in object_list %}
+  {% if user.is_authenticated or post.is_public %}
+  <li>{% if not post.is_public %}[下書き] {% endif %}{{ post.title }}</li>
+  {% endif %}
+  {% empty %}
+  <li>まだ投稿はありません。</li>
+  {% endfor %}
+</ul>
